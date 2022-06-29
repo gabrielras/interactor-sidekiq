@@ -25,7 +25,7 @@ module Interactor
       include ::Sidekiq::Worker
 
       def perform(context)
-        interactor_class(context).sync_call(context.except(:interactor_class))
+        interactor_class(context).sync_call(context.reject { |c| ['interactor_class'].include? c.to_s })
       rescue Exception => e
         if interactor_class(context).respond_to?(:handle_sidekiq_exception)
           interactor_class(context).handle_sidekiq_exception(e)

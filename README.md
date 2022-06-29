@@ -47,8 +47,7 @@ In order to be able to schedule jobs for future execution following [Scheduled J
 
 ```sh
 >> RegularAction.async_call(message: 'hello!', sidekiq_options: { queue: :low_priority }, sidekiq_schedule_options: { perform_in: 5 })
-
-Interactor::Context message: 'hello!', sidekiq_options: { queue: :low_priority }, sidekiq_schedule_options: { perform_in: 5 }
+#<Interactor::Context message="hello!", sidekiq_options={ queue: :low_priority }, sidekiq_schedule_options={ perform_in: 5 }>
 ```
 
 ## Failure
@@ -70,8 +69,10 @@ Now you need an interactor to always assume asynchronous behavior using: **Inter
 #### Passing handle sidekiq exception
 
 When executing the perform method in sidekiq there may be a problem, thinking about it we have already made it possible for you to handle this error.
+
 **If the context is failed during invocation of the interactor in background, the Interactor::Failure is raised**.
 
+Use self.method_name to customize your class: **self.sidekiq_options**, **self.sidekiq_schedule_options** and **self.handle_sidekiq_exception(error)**.
 
 ```ruby
 class AsyncAction

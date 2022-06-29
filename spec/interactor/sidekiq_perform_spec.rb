@@ -51,7 +51,7 @@ RSpec.describe Interactor::SidekiqWorker::Worker do
 
       it { expect(result.success?).to eq true }
 
-      it { expect(result.to_h).to eq context.except(:interactor_class) }
+      it { expect(result.to_h).to eq context.reject { |c| ['interactor_class'].include? c.to_s } }
 
       it_behaves_like 'there was no new sidekiq worker'
     end

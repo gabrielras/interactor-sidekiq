@@ -98,7 +98,6 @@ RSpec.describe Interactor::SidekiqWorker do
     before { Sidekiq::Queues.clear_all }
     before { result }
 
-    
     it { expect(respond_to?(:jobs_by_queue)).to be_truthy }
   end
 
